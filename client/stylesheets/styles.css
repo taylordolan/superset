@@ -7,6 +7,7 @@
   width: 100%;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
+  white-space: nowrap;
 }
 .textcard {
   box-sizing: border-box;

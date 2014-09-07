@@ -20,7 +20,7 @@
     console.log(maxcards - in_play)
     for i in [0..(maxcards - in_play - 1)] by 1
       if (cards_left = Gamecards.find({status: 'unused'}).count()) == 0
-        Gamecards.update({status: 'matched'}, {$set: {status: 'unused'}})
+        Gamecards.update({status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
         cards_left = Gamecards.find({status: 'unused'}).count()
       console.log('cards left ' + cards_left)
       R = Math.floor(Math.random() * cards_left)

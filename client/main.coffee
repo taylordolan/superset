@@ -17,14 +17,12 @@ Template.hello.helpers
 
 Template.globalGame.events
   'click button': () ->
-    Meteor.call('check_sets',
-      (error, result) ->
-        if error
-          console.log(error)
-        else
-          $('.messages').append('<div class="chk">'+result+'</div>')
-          Meteor.setTimeout((-> $('.chk').remove()), 1000)
-    )
+    Meteor.call 'check_sets', (error, result) ->
+      if error
+        console.log(error)
+      else
+        $('.messages').append('<div class="chk">'+result+'</div>')
+        Meteor.setTimeout((-> $('.chk').remove()), 1000)
 
 Template.globalGame.events
   'click .card': (e, template) ->
@@ -92,8 +90,8 @@ Template.globalGame.events
 
 Template.globalGame.helpers
   gamecards: () ->
-    gc = Gamecards.find({status: 'playing'})
-    cardIds = gc.map( (c) -> return c.card_mid )
+    gc = Gamecards.find status: 'playing'
+    cardIds = gc.map (c) -> return c.card_mid
     console.log(cardIds)
     all = Cards.find({_id: {$in: cardIds}}).fetch();
     chunks = []
@@ -106,7 +104,6 @@ Template.globalGame.helpers
     console.log("all : " + all.length)
     return chunks
 
-
 Template.textcard.helpers
   numbers: (index) ->
     return numbers[index]
@@ -117,8 +114,3 @@ Template.textcard.helpers
   shapes: (index, number) ->
     plural = if number > 0 then 's' else ''
     return shapes[index] + plural
-
-
-# Template.card.helpers
-#   card: (card_id) ->
-#     return Cards.findOne({_id: card_id})
