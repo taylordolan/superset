@@ -1,0 +1,45 @@
+.body {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+.cardrow {
+  height: 33%;
+  width: 100%;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+.textcard {
+  box-sizing: border-box;
+  max-width: 24%;
+  min-height:40px;
+  width: 25%;
+  height:100%;
+  display: inline-block;
+  border-radius: 6px;
+  margin: 10px 10px 0 0px;
+  padding: 0 0 0 0;
+  font-size: 16px;
+  line-height: 40px;
+  font-family: verdana;
+  text-align: center;
+}
+.green-card {
+  border: 3px solid green;
+}
+.red-card {
+  border: 3px solid red;
+}
+.purple-card {
+  border: 3px solid purple;
+}
+.selected {
+  background-color: lightblue;
+}
+.messages {
+  background-color: lightgrey;
+  color: darkred;
+  border-radius: 6px;
+  width:40%;
+  text-align: center;
+  margin: 40px auto;
+}

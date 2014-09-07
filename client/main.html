@@ -1,0 +1,44 @@
+<head>
+  <title>superset</title>
+</head>
+
+<body>
+  <h1>Welcome to SuperSet!</h1>
+
+  <div id="game">
+    {{> globalGame}}
+  </div>
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="globalGame">
+  {{#each gamecards}}
+    {{> cardrow}}
+  {{/each}}
+  <button>Check For Sets</button>
+  <p class='checksets'></p>
+  <div class='messages'></div>
+</template>
+
+<template name="cardrow">
+  <div class='cardrow'>
+    {{#each row }}{{> textcard}}{{/each}}
+  </div>
+</template>
+
+
+<template name="card">
+  <div class="card">
+  {{number}} {{color}} {{shade}} {{shape}}
+  </div>
+</template>
+
+<template name="textcard">
+  <div class="card textcard {{colors color}}-card" id={{_id}}>
+  {{numbers number}} {{colors color}} {{shades shade}} {{shapes shape number}}
+  </div>
+</template>
