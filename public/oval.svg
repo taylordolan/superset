@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="112px" height="222px" viewBox="0 0 112 222" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.4 (8053) - http://www.bohemiancoding.com/sketch -->
+    <title>solid oval</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M55.51,0.29 C25.135,0.29 0.51,24.914 0.51,55.29 L0.51,165.29 C0.51,195.666 25.135,220.29 55.51,220.29 C85.886,220.29 110.51,195.666 110.51,165.29 L110.51,55.29 C110.51,24.914 85.886,0.29 55.51,0.29" id="solid-oval" fill="#1A1918" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>

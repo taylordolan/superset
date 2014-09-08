@@ -3,7 +3,6 @@
   padding: 0 0 0 0;
 }
 .cardrow {
-  height: 33%;
   width: 100%;
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -22,6 +21,17 @@
   font-size: 16px;
   line-height: 40px;
   font-family: verdana;
+  text-align: center;
+}
+.card {
+  box-sizing: border-box;
+  max-width: 24%;
+  width: 25%;
+  height:100%;
+  display: inline-block;
+  border-radius: 6px;
+  margin: 10px 10px 0 0px;
+  padding: 0 0 0 0;
   text-align: center;
 }
 .green-card {
@@ -43,4 +53,27 @@
   width:40%;
   text-align: center;
   margin: 40px auto;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+.purple {
+  color: purple;
+}
+svg {
+  fill: currentColor;
+  pointer-events: none;
+}
+.button-row {
+  width: 100%;
+  margin: 10px 0 0 0;
+}
+.button {
+  display: inline-block;
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 6px;
 }

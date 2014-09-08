@@ -4,6 +4,7 @@ Meteor.subscribe('games');
 Meteor.subscribe('statistics');
 
 Session.setDefault("counter", 0)
+Session.setDefault("interface-type", "textcard")
 
 @shapes = ['diamond', 'oval', 'squiggle']
 @colors = ['green', 'purple', 'red']
@@ -12,20 +13,24 @@ Session.setDefault("counter", 0)
 
 set = []
 
-Template.hello.helpers
-  counter: () -> return Session.get("counter")
-
 Template.globalGame.events
-  'click button': () ->
+  'click .check': () ->
     Meteor.call 'check_sets', (error, result) ->
       if error
         console.log(error)
       else
         $('.messages').append('<div class="chk">'+result+'</div>')
         Meteor.setTimeout((-> $('.chk').remove()), 1000)
+  'click .toggle': ->
+    if Session.get("interface-type") == "card"
+      Session.set("interface-type","textcard")
+    else
+      Session.set("interface-type","card")
+
 
 Template.globalGame.events
   'click .card': (e, template) ->
+    event.preventDefault();
     if ($(e.target).hasClass('selected'))
       $(e.target).removeClass('selected')
       i = 0
@@ -104,6 +109,10 @@ Template.globalGame.helpers
     console.log("all : " + all.length)
     return chunks
 
+Template.cardrow.helpers
+  cardDisplayType: ->
+    return Session.get("interface-type")
+
 Template.textcard.helpers
   numbers: (index) ->
     return numbers[index]
@@ -114,3 +123,19 @@ Template.textcard.helpers
   shapes: (index, number) ->
     plural = if number > 0 then 's' else ''
     return shapes[index] + plural
+
+Template.card.helpers
+  numbers: (index) ->
+    return numbers[index]
+  colors: (index) ->
+    return colors[index]
+  shades: (index) ->
+    return shades[index]
+  shapes: (index, number) ->
+    plural = if number > 0 then 's' else ''
+    return shapes[index] + plural
+  shapearray: (number) ->
+    a = []
+    for i in [0..number]
+      a.push(i+1)
+    return a

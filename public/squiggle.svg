@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="112px" height="222px" viewBox="0 0 112 222" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0.4 (8053) - http://www.bohemiancoding.com/sketch -->
+    <title>solid curve</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <path d="M6.397,156.337 C6.397,193.164 34.875,220.29 67.877,220.29 C93.387,220.29 109.916,207.763 110.489,195.284 C111.337,176.798 86.497,172.35 86.497,141.908 C86.497,112.665 104.624,105.754 104.624,64.243 C104.624,27.416 76.145,0.29 43.143,0.29 C17.633,0.29 1.104,12.817 0.531,25.296 C-0.317,43.782 24.523,48.23 24.523,78.672 C24.523,107.914 6.397,114.826 6.397,156.337" id="solid-curve" fill="#1A1918" sketch:type="MSShapeGroup"></path>
+    </g>
+</svg>
