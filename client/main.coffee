@@ -34,9 +34,12 @@ Template.globalGame.events
     if ($(e.target).hasClass('selected'))
       $(e.target).removeClass('selected')
       i = 0
-      (if (card._id == this._id) then console.log('match ' + i); match = i; i++;) for card in set
+      match = 0
+      for card in set
+       if (card._id == this._id)
+         match = i
+       i++
       set.splice(match,1)
-      console.log(set)
     else
       if ($('.card.selected').length < 3)
         $(e.target).addClass('selected')
@@ -49,7 +52,7 @@ Template.globalGame.events
       SD = 0
       SP = 0
       (N = N + card.number; C = C + card.color; SD = SD + card.shade; SP = SP + card.shape) for card in set
-      delay = 1500
+      delay = 3500
       delay_increment = 750
       if (N % 3 == 0)
         v_number = true
@@ -97,16 +100,16 @@ Template.globalGame.helpers
   gamecards: () ->
     gc = Gamecards.find status: 'playing'
     cardIds = gc.map (c) -> return c.card_mid
-    console.log(cardIds)
+    #console.log(cardIds)
     all = Cards.find({_id: {$in: cardIds}}).fetch();
     chunks = []
     size = 4
-    console.log("all : " + all.length)
+    #console.log("all : " + all.length)
     while (all.length > size)
       chunks.push({ row: all.slice(0, size)})
       all = all.slice(size)
     chunks.push({row: all});
-    console.log("all : " + all.length)
+    #console.log("all : " + all.length)
     return chunks
 
 Template.cardrow.helpers

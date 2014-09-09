@@ -66,15 +66,15 @@
   console.log("sets: " + i)
   if i == 0
     if c.length == 12
-      #refill_game(15)
-      #Statistics.update({game: 0}, {$inc: {no_sets_in_twelve: 1}})
+      refill_game(15)
+      Statistics.update({game: 0}, {$inc: {no_sets_in_twelve: 1}})
       message = "Adding 3 cards to 12"
     else if c.length == 15
-      #refill_game(18)
-      #Statistics.update({game: 0}, {$inc: {no_sets_in_fifteen: 1}})
+      refill_game(18)
+      Statistics.update({game: 0}, {$inc: {no_sets_in_fifteen: 1}})
       message = "Adding 3 cards to 15"
     else
-      #refill_game(12)
+      refill_game(12)
       console.log("too few cards " + c.length)
   else
     message = "There exist " + i + " sets."
