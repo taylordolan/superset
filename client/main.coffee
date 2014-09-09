@@ -139,3 +139,10 @@ Template.card.helpers
     for i in [0..number]
       a.push(i+1)
     return a
+  shader: (shade,color) ->
+    if shade == 1
+      return "fill: url(#" + colors[color] + "-stripes);"
+    else if shade == 2
+      return "fill: " + colors[color] + ";"
+    else
+      return "fill: none;"

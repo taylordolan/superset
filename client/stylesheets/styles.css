@@ -64,7 +64,6 @@
   color: purple;
 }
 svg {
-  stroke: black;
   stroke-width: 5;
   pointer-events: none;
 }

@@ -1,21 +1,40 @@
 <head>
   <title>SuperSet</title>
-  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
-  <defs>
-  <g id="diamond">
-    <path d="M50,7 L96,100 L50,193 L4,100 L50,7 Z"></path>
-  </g>
-  <g id="oval">
-    <path d="M3,150 L3,50 C3,24.084 24,3 50,3 C76,3 97,24 97,50 L97,150 C97,176 75.916,197 50,197 C24.084,197 3,176 3,150 Z"></path>
-  </g>
-  <g id="squiggle">
-    <path d="M25,77 C25,48 4,45 4,25 C4,14 18,3 40,3 C66,3 92,21 92,54 C92,86 75,100 75,123 C75,152 96,155 96,175 C96,186 82,197 60,197 C34,197 8,179 8,146 C8,114 25,100.02465 25,77 Z"></path>
-  </g>
-  </defs>
-  </svg>
 </head>
-
 <body>
+<svg width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<g id="diamond">
+  <path d="M50,7 L96,100 L50,193 L4,100 L50,7 Z"></path>
+</g>
+<g id="oval">
+  <path d="M3,150 L3,50 C3,24.084 24,3 50,3 C76,3 97,24 97,50 L97,150 C97,176 75.916,197 50,197 C24.084,197 3,176 3,150 Z"></path>
+</g>
+<g id="squiggle">
+  <path d="M25,77 C25,48 4,45 4,25 C4,14 18,3 40,3 C66,3 92,21 92,54 C92,86 75,100 75,123 C75,152 96,155 96,175 C96,186 82,197 60,197 C34,197 8,179 8,146 C8,114 25,100.02465 25,77 Z"></path>
+</g>
+<pattern id="triangle"
+         width="10" height="10"
+         patternUnits="userSpaceOnUse">
+    <polygon points="5,0 10,10 0,10"/>
+</pattern>
+<pattern id="green-stripes"
+         x="10" y="10" width="10" height="10"
+         patternUnits="userSpaceOnUse" >
+  <rect x="0" y="7" width="10" height="10" style="stroke: 1px; fill: green" />
+</pattern>
+<pattern id="red-stripes"
+         x="10" y="10" width="10" height="10"
+         patternUnits="userSpaceOnUse" >
+  <rect x="0" y="7" width="10" height="10" style="stroke: 1px; fill: red;"/>
+</pattern>
+<pattern id="purple-stripes"
+         x="10" y="10" width="10" height="10"
+         patternUnits="userSpaceOnUse" >
+  <rect x="0" y="7" width="10" height="10" style="stroke: 1px; fill: purple;" />
+</pattern>
+</defs>
+</svg>
   <h1>Welcome to SuperSet!</h1>
 
   <div id="game">
@@ -48,10 +67,10 @@
 </template>
 
 <template name="card">
-  <div class="card {{colors color}}-card" id={{_id}} style="color: {{colors color}}; fill: currentColor;">
+  <div class="card {{colors color}}-card" id={{_id}}>
   {{#each shapearray number}}
-  <svg data-number="{{number}}" style="border: 0px solid black" width="100" height="200" z-index=-40>
-    <use xlink:href="#{{shapes ../shape}}"></use>
+  <svg data-number="{{number}}" width="100" height="200" z-index=-40>
+    <use xlink:href="#{{shapes ../shape}}" style="stroke: {{colors ../color}}; {{shader ../shape ../color}}" />
   </svg>
   {{/each}}
   </div>
