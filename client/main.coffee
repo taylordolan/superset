@@ -144,5 +144,5 @@ Template.card.helpers
       return "fill: url(#" + colors[color] + "-stripes);"
     else if shade == 2
       return "fill: " + colors[color] + ";"
-    else
+    else if shade == 0
       return "fill: none;"
