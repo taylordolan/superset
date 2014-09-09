@@ -44,30 +44,41 @@
   cardIds = gc.map( (c) -> return c.card_mid )
   c = Cards.find({_id: {$in: cardIds}}).fetch()
   i = 0
+  n = 0
   for card1 in c
+    n++
+    n2 = 0
     for card2 in c
-      for card3 in c
-        if card1 != card2 && card2 != card3 && card1 != card3
-          N = card1.number + card2.number + card3.number
-          C = card1.color + card2.color + card3.color
-          SD = card1.shade + card2.shade + card3.shade
-          SP = card1.shape + card2.shape + card3.shape
-          if ((N % 3 == 0) && (C % 3 == 0) && (SD % 3 == 0) && (SP % 3 == 0))
-            i++
+      n2++
+      n3 = 0
+      if n2 > n && n2 < c.length
+        for card3 in c
+          n3++
+          if n3 > n2
+            console.log(n + ' - ' + n2 + ' - ' + n3)
+            if card1 != card2 && card2 != card3 && card1 != card3
+              N = card1.number + card2.number + card3.number
+              C = card1.color + card2.color + card3.color
+              SD = card1.shade + card2.shade + card3.shade
+              SP = card1.shape + card2.shape + card3.shape
+              if ((N % 3 == 0) && (C % 3 == 0) && (SD % 3 == 0) && (SP % 3 == 0))
+                i++
   console.log("sets: " + i)
   if i == 0
     if c.length == 12
-      refill_game(15)
-      Statistics.update({game: 0}, {$inc: {no_sets_in_twelve: 1}})
-      message = "Adding 3 cards"
+      #refill_game(15)
+      #Statistics.update({game: 0}, {$inc: {no_sets_in_twelve: 1}})
+      message = "Adding 3 cards to 12"
     else if c.length == 15
-      refill_game(18)
-      Statistics.update({game: 0}, {$inc: {no_sets_in_fifteen: 1}})
-      message = "Adding 3 cards"
+      #refill_game(18)
+      #Statistics.update({game: 0}, {$inc: {no_sets_in_fifteen: 1}})
+      message = "Adding 3 cards to 15"
     else
-      refill_game(12)
+      #refill_game(12)
       console.log("too few cards " + c.length)
   else
     message = "There exist " + i + " sets."
   console.log(message)
   return message
+
+  @

@@ -3,13 +3,13 @@
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: none;">
   <defs>
   <g id="diamond">
-    <path d="M0,100 L50,0 L100,100 L50,200 Z"></path>
+    <path d="M4,104 L54,4 L104,104 L54,204 Z"></path>
   </g>
   <g id="oval">
     <path d="M50,0 C25,0 0,25 0,50 L0,150 C0,175 25,200 50,200 C75,200 100,175 100,150 L100,50 C100,25 75,0 50,0"></path>
   </g>
   <g id="squiggle">
-    <path d="M6,140 C6,174 31,200 61,200 C84,200 100,187 100,176 C100,159 78,155 78,127 C78,100 94,95 95,58 C94,25 69,0 39,0 C16,0 1,11 0,23 C0,39 22,44 22,71 C22,89 6,103 6,141"></path>
+    <path d="M6,140 C6,174 31,200 61,200 C84,200 100,187 100,176 C100,159 78,155 78,127 C78,100 94,95 95,58 C94,25 69,0 39,0 C16,0 1,11 0,23 C0,39 22,44 22,71 C22,89 6,103 6,140"></path>
   </g>
   </defs>
   </svg>
@@ -48,7 +48,7 @@
 </template>
 
 <template name="card">
-  <div class="card textcard {{colors color}}-card" id={{_id}} style="color: {{colors color}}; fill: currentColor;">
+  <div class="card {{colors color}}-card" id={{_id}} style="color: {{colors color}}; fill: currentColor;">
   {{#each shapearray number}}
   <svg data-number="{{number}}" style="border: 0px solid black" width="100" height="200" z-index=-40>
     <use xlink:href="#{{shapes ../shape}}"></use>

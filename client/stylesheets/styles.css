@@ -35,13 +35,13 @@
   text-align: center;
 }
 .green-card {
-  border: 3px solid green;
+  border: 3px solid gray;
 }
 .red-card {
-  border: 3px solid red;
+  border: 3px solid gray;
 }
 .purple-card {
-  border: 3px solid purple;
+  border: 3px solid gray;
 }
 .selected {
   background-color: lightblue;
@@ -64,7 +64,8 @@
   color: purple;
 }
 svg {
-  fill: currentColor;
+  stroke: black;
+  stroke-width: 5;
   pointer-events: none;
 }
 .button-row {

@@ -4,7 +4,7 @@ Meteor.subscribe('games');
 Meteor.subscribe('statistics');
 
 Session.setDefault("counter", 0)
-Session.setDefault("interface-type", "textcard")
+Session.setDefault("interface-type", "card")
 
 @shapes = ['diamond', 'oval', 'squiggle']
 @colors = ['green', 'purple', 'red']
