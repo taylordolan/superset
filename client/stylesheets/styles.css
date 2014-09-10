@@ -77,3 +77,6 @@ svg {
   padding: 5px;
   border-radius: 6px;
 }
+.button.pressed {
+  background-color: lightblue;
+}
