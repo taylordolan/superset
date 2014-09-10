@@ -87,6 +87,10 @@ Meteor.startup ->
         Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
         Statistics.update({game: 0}, {$inc: {superunknown_found: 1}})
         refill_game(12)
+        message = 'Valid Super Unknown Set!'
+      else
+        message = 'Not a valid Super Unknown Set'
+      return message
 
 
 

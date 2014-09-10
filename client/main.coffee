@@ -112,7 +112,12 @@ Template.globalGame.events
         setargs = []
         setargs.push card._id for card in set
         console.log(setargs)
-        Meteor.call('SUset', setargs)
+        Meteor.call 'SUset', setargs, (error, result) ->
+          if error
+            console.log(error)
+          else
+            $('.messages').append('<div class="chk">'+result+'</div>')
+            Meteor.setTimeout((-> $('.chk').remove()), 1750)
         Meteor.setTimeout((-> $('.selected').removeClass('selected')))
         set = []
 
