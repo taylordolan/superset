@@ -36,7 +36,7 @@ svg {
 .cardrow {
   width: 100%;
   margin: 0 0 0 0;
-  padding: 0 0 0 0;
+  padding: 2px 10px 2px 2px;
   white-space: nowrap;
 }
 .textcard {
@@ -55,10 +55,15 @@ svg {
   text-align: center;
 }
 .card {
+  display: inline-block;
+  position: relative;
+  width: 24%;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 6px;
+}
+.card2 {
   box-sizing: border-box;
-  max-width: 24%;
-  width: 25%;
-  height:100%;
   display: inline-block;
   border-radius: 6px;
   margin: 10px 10px 0 0px;

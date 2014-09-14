@@ -17,6 +17,9 @@
 <g id="squiggle">
   <path d="M25,77 C25,48 4,45 4,25 C4,14 18,3 40,3 C66,3 92,21 92,54 C92,86 75,100 75,123 C75,152 96,155 96,175 C96,186 82,197 60,197 C34,197 8,179 8,146 C8,114 25,100.02465 25,77 Z"></path>
 </g>
+<g id="testi">
+  <rect fill=url(#pattern1) stroke="#231F20" stroke-width="10" stroke-miterlimit="10" width="100" height="200" opacity="0.6" />
+</g>
 <pattern id="green-stripes"
          x="10" y="10" width="10" height="10"
          patternUnits="userSpaceOnUse" style="display:inline-block;">
@@ -62,9 +65,9 @@
 </template>
 
 <template name="card">
-  <div class="card {{colors color}}-card" id={{_id}} width="100" height="200">
+  <div class="card {{colors color}}-card" id={{_id}}>
   {{#each shapearray number}}
-  <svg data-number="{{number}}" width="100" height="200" z-index=-40 style="display:inline-block;">
+  <svg width="25%" viewBox="0 0 100 200" preserveAspectRatio="xMinYMin meet" data-number="{{number}}" z-index=-40>
     <use xlink:href="#{{shapes ../shape}}" style="stroke: {{colors ../color}}; {{shader ../shade ../color}}" />
   </svg>
   {{/each}}
