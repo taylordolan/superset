@@ -6,6 +6,7 @@ Meteor.subscribe('statistics');
 Session.setDefault("counter", 0)
 Session.setDefault("interface-type", "card")
 Session.setDefault("selection-type", "normal")
+Session.setDefault("isometric", "false")
 Session.setDefault("selection-limit", 3)
 
 @shapes = ['diamond', 'oval', 'squiggle']
@@ -30,7 +31,7 @@ Template.globalGame.events
     else
       $('.button.display').removeClass('pressed')
       Session.set("interface-type","card")
-   'click .mode': ->
+  'click .mode': ->
     if Session.get("selection-type") == "normal"
       $('.button.mode').addClass('pressed')
       Session.set("selection-type","superunknown")
@@ -39,6 +40,20 @@ Template.globalGame.events
       $('.button.mode').removeClass('pressed')
       Session.set("selection-type","normal")
       Session.set("selection-limit", 3)
+  'click .isometric': ->
+    if Session.get("isometric") == "false"
+      $('.button.isometric').addClass('pressed')
+      $('.button.mode').addClass('pressed')
+      Session.set("isometric","true")
+      Session.set("selection-type","superunknown")
+      Session.set("selection-limit", 6)
+    else
+      $('.button.mode').removeClass('pressed')
+      $('.button.isometric').removeClass('pressed')
+      Session.set("selection-type","normal")
+      Session.set("isometric","false")
+      Session.set("selection-limit", 3)
+
 
 Template.globalGame.events
   'click .card': (e, template) ->
@@ -58,6 +73,8 @@ Template.globalGame.events
         set.push(this)
 
     console.log('selected cards ' + $('.card.selected').length)
+    for card in set
+      console.log(card._id)
     if Session.get("selection-type") == "normal"
       if ($('.card.selected').length == 3)
         N = 0
@@ -112,7 +129,9 @@ Template.globalGame.events
         setargs = []
         setargs.push card._id for card in set
         console.log(setargs)
-        Meteor.call 'SUset', setargs, (error, result) ->
+        if Session.get("isometric") == "true"
+          iso = 1
+        Meteor.call 'SUset', setargs, iso, (error, result) ->
           if error
             console.log(error)
           else
