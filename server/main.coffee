@@ -1,6 +1,23 @@
 @card_lookup = [0,2,1,0,2]
 @game = 0
 
+Array.prototype.equals = (array) ->
+  if !array
+    return false;
+
+  if (this.length != array.length)
+    return false;
+
+  i = 0
+  for thing in this
+    if (this[i] instanceof Array && array[i] instanceof Array)
+      if (!this[i].equals(array[i]))
+        return false
+    else if (this[i] != array[i])
+      return false
+    i++
+  return true
+
 Meteor.startup ->
   refill_game(12)
   Meteor.methods
@@ -24,10 +41,8 @@ Meteor.startup ->
           Statistics.update({game: 0}, {$inc: {sets_found: 1}})
           refill_game(12)
     SUset: (cards,iso = 0) ->
-      console.log(cards)
-      console.log(iso)
       pairings = []
-      if iso == 0
+      if false
         n = 0
         for C1 in cards
           n++
@@ -52,7 +67,6 @@ Meteor.startup ->
                   SUSs.push([S1,S2,S3])
       else
         SUSs = [[[cards[0],cards[1]],[cards[2],cards[3]],[cards[4],cards[5]]]]
-      #console.log(SUSs)
       i = 0
       for SUS in SUSs
         console.log(SUS)
@@ -76,36 +90,37 @@ Meteor.startup ->
           SP3 = card_lookup[SP]
           derived_set.push([N3,C3,SD3,SP3])
         if iso == 1
-          unless derived_set[0] == derived_set[1] && derived_set[0] == derived_set[2]
+          unless derived_set[0].equals(derived_set[1]) && derived_set[0].equals(derived_set[2])
             derived_set = []
         N = 0
         C = 0
         SD = 0
         SP = 0
+        console.log(i)
+        console.log(derived_set)
         for card in derived_set
           N += card[0]
           C += card[1]
           SD += card[2]
           SP += card[3]
         #console.log(N + ':' + C + ':' + SD + ':' + SP)
-        if ((N % 3 == 0) && (C % 3 == 0) && (SD % 3 == 0) && (SP % 3 == 0))
+        if ((N % 3 == 0) && (C % 3 == 0) && (SD % 3 == 0) && (SP % 3 == 0) && derived_set.length > 0)
           i++
           console.log('VALID SUS')
-          console.log(derived_set)
       console.log(i)
       if iso == 0
         if i > 0
-          Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
-          Statistics.update({game: 0}, {$inc: {superunknown_found: 1}})
-          refill_game(12)
+          #Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
+          #Statistics.update({game: 0}, {$inc: {superunknown_found: 1}})
+          #refill_game(12)
           message = 'Valid Super Unknown Set!'
         else
           message = 'Not a valid Super Unknown Set'
       else
         if i > 0
-          Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
-          Statistics.update({game: 0}, {$inc: {isosuperunknown_found: 1}})
-          refill_game(12)
+          #Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
+          #Statistics.update({game: 0}, {$inc: {isosuperunknown_found: 1}})
+          #refill_game(12)
           message = 'Valid Isometric Super Unknown Set!'
         else
           message = 'Not a valid Isometric Super Unknown Set (selection order matters)'

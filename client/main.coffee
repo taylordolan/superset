@@ -40,6 +40,8 @@ Template.globalGame.events
       $('.button.mode').removeClass('pressed')
       Session.set("selection-type","normal")
       Session.set("selection-limit", 3)
+      $('.button.isometric').removeClass('pressed')
+      Session.set("isometric","false")
   'click .isometric': ->
     if Session.get("isometric") == "false"
       $('.button.isometric').addClass('pressed')
@@ -48,11 +50,8 @@ Template.globalGame.events
       Session.set("selection-type","superunknown")
       Session.set("selection-limit", 6)
     else
-      $('.button.mode').removeClass('pressed')
       $('.button.isometric').removeClass('pressed')
-      Session.set("selection-type","normal")
       Session.set("isometric","false")
-      Session.set("selection-limit", 3)
 
 
 Template.globalGame.events
