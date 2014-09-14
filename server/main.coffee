@@ -110,17 +110,17 @@ Meteor.startup ->
       console.log(i)
       if iso == 0
         if i > 0
-          #Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
-          #Statistics.update({game: 0}, {$inc: {superunknown_found: 1}})
-          #refill_game(12)
+          Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
+          Statistics.update({game: 0}, {$inc: {superunknown_found: 1}})
+          refill_game(12)
           message = 'Valid Super Unknown Set!'
         else
           message = 'Not a valid Super Unknown Set'
       else
         if i > 0
-          #Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
-          #Statistics.update({game: 0}, {$inc: {isosuperunknown_found: 1}})
-          #refill_game(12)
+          Gamecards.update({game_id: game, card_mid: {$in: cards}, status: 'playing'}, {$set: {status: 'matched'}}, {multi: true})
+          Statistics.update({game: 0}, {$inc: {isosuperunknown_found: 1}})
+          refill_game(12)
           message = 'Valid Isometric Super Unknown Set!'
         else
           message = 'Not a valid Isometric Super Unknown Set (selection order matters)'
