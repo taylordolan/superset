@@ -42,7 +42,7 @@ Template.globalGame.events
 
 Template.globalGame.events
   'click .card': (e, template) ->
-    event.preventDefault();
+    e.preventDefault();
     if ($(e.target).hasClass('selected'))
       $(e.target).removeClass('selected')
       i = 0
@@ -121,13 +121,16 @@ Template.globalGame.events
         Meteor.setTimeout((-> $('.selected').removeClass('selected')))
         set = []
 
+Template.nav.helpers
+  statistics: () ->
+    return Statistics.findOne()
 
 Template.globalGame.helpers
   gamecards: () ->
     gc = Gamecards.find status: 'playing'
     cardIds = gc.map (c) -> return c.card_mid
     #console.log(cardIds)
-    all = Cards.find({_id: {$in: cardIds}}).fetch();
+    all = Cards.find({_id: {$in: cardIds}}).fetch()
     chunks = []
     size = 4
     #console.log("all : " + all.length)
@@ -137,6 +140,9 @@ Template.globalGame.helpers
     chunks.push({row: all});
     #console.log("all : " + all.length)
     return chunks
+  buttonstate: (name,value) ->
+    if Session.get(name) == value
+      return 'pressed'
 
 Template.cardrow.helpers
   cardDisplayType: ->

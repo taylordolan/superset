@@ -1,6 +1,37 @@
-.body {
-  margin: 0 0 0 0;
-  padding: 0 0 0 0;
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup,
+ var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside, canvas, details, figcaption, figure, footer,
+header, hgroup, menu, nav, section, summary, time, mark, audio, video
+ { margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; }
+svg {
+  stroke-width: 5;
+  pointer-events: none;
+  vertical-align: bottom;
+}
+.topbar {
+  width: 100%;
+  text-align: left;
+  background-color: lightblue;
+  color: blue;
+  font-family: verdana;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 20px;
+  padding: 1px 0 1px 0;
+  vertical-align: middle;
+  display: table;
+}
+.logo {
+  display: inline-block;
+  vertical-align: middle;
+}
+.navinfo {
+  font-weight: normal;
+  font-size: 14px;
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
 }
 .cardrow {
   width: 100%;
@@ -62,10 +93,6 @@
 }
 .purple {
   color: purple;
-}
-svg {
-  stroke-width: 5;
-  pointer-events: none;
 }
 .button-row {
   width: 100%;
