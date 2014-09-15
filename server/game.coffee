@@ -1,3 +1,5 @@
+@game = 0
+
 @get_random_card = () ->
   # number = Math.floor((Math.random() * 3))
   # color = Math.floor((Math.random() * 3))
@@ -5,42 +7,41 @@
   # shape = Math.floor((Math.random() * 3))
   # console.log("#{number} #{color} #{shade} #{shape}")
   # c = Cards.find({number: number, color: color, shade: shade, shape: shape, type: 'standard'})
-
   return c
 
-@refill_game = (maxcards) ->
+@refill_game = (maxcards,game_id) ->
   if maxcards
     maxcards
   else
     maxcards = 12
   console.log('refill')
-  in_play = Gamecards.find({status: 'playing'}).count()
+  in_play = Gamecards.find({game_id: game_id, status: 'playing'}).count()
   #console.log("cards in play: " + in_play)
   if in_play < maxcards
     console.log(maxcards - in_play)
     for i in [0..(maxcards - in_play - 1)] by 1
-      if (cards_left = Gamecards.find({status: 'unused'}).count()) == 0
-        Gamecards.update({game_id: game, status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
-        cards_left = Gamecards.find({status: 'unused'}).count()
+      if (cards_left = Gamecards.find({game_id: game_id, status: 'unused'}).count()) == 0
+        Gamecards.update({game_id: game_id, status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
+        cards_left = Gamecards.find({game_id: game_id,status: 'unused'}).count()
       console.log('cards left ' + cards_left)
       R = Math.floor(Math.random() * cards_left)
       console.log(cards_left)
       console.log(R)
-      gc = Gamecards.find({status: 'unused'},{limit: 1, skip: R}).fetch()
-      Gamecards.update({game_id: game, _id: gc[0]._id, status:'unused'}, {$set: {status: 'playing'}},
+      gc = Gamecards.find({game_id: game_id, status: 'unused'},{limit: 1, skip: R}).fetch()
+      Gamecards.update({game_id: game_id, _id: gc[0]._id, status:'unused'}, {$set: {status: 'playing'}},
         callback = (error,result) ->
           console.log("records affected: " + result)
           if result > 0
             affected = result
             console.log("added: " + affected)
       )
-  in_play = Gamecards.find({status: 'playing'}).count()
+  in_play = Gamecards.find({game_id: game_id, status: 'playing'}).count()
   console.log("cards in play: " + in_play)
 
 
-@check_for_sets = () ->
+@check_for_sets = (game_id) ->
   console.log('checking for sets')
-  gc = Gamecards.find({status: 'playing'})
+  gc = Gamecards.find({game_id: game_id, status: 'playing'})
   cardIds = gc.map( (c) -> return c.card_mid )
   c = Cards.find({_id: {$in: cardIds}}).fetch()
   i = 0
@@ -66,15 +67,15 @@
   console.log("sets: " + i)
   if i == 0
     if c.length == 12
-      refill_game(15)
-      Statistics.update({game: game}, {$inc: {no_sets_in_twelve: 1}})
+      refill_game(15,game_id)
+      Statistics.update({game: game_id}, {$inc: {no_sets_in_twelve: 1}})
       message = "Adding 3 cards to 12"
     else if c.length == 15
-      refill_game(18)
-      Statistics.update({game: game}, {$inc: {no_sets_in_fifteen: 1}})
+      refill_game(18,game_id)
+      Statistics.update({game: game_id}, {$inc: {no_sets_in_fifteen: 1}})
       message = "Adding 3 cards to 15"
     else
-      refill_game(12)
+      refill_game(12,game_id)
       console.log("too few cards " + c.length)
   else
     message = "There exist " + i + " sets."

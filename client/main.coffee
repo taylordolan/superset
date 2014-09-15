@@ -15,11 +15,13 @@ Session.setDefault("dark","false")
 @shades = ['empty', 'shaded', 'solid']
 @numbers = ['one', 'two', 'three']
 
+@game = 0
+
 set = []
 
 Template.globalGame.events
   'click .check': () ->
-    Meteor.call 'check_sets', (error, result) ->
+    Meteor.call 'check_sets', game, (error, result) ->
       if error
         console.log(error)
       else
@@ -130,7 +132,7 @@ Template.globalGame.events
           setargs = []
           setargs.push card._id for card in set
           console.log(setargs)
-          Meteor.call('set', setargs)
+          Meteor.call('set', game, setargs)
           Meteor.setTimeout((-> $('.selected').removeClass('selected')))
           set = []
         else
@@ -143,7 +145,7 @@ Template.globalGame.events
         console.log(setargs)
         if Session.get("isometric") == "true"
           iso = 1
-        Meteor.call 'SUset', setargs, iso, (error, result) ->
+        Meteor.call 'SUset', game, setargs, iso, (error, result) ->
           if error
             console.log(error)
           else
