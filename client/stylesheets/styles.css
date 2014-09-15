@@ -12,8 +12,8 @@ svg {
 .topbar {
   width: 100%;
   text-align: left;
-  background-color: lightblue;
-  color: blue;
+  background-color: lightgrey;
+  color: #444444;
   font-family: verdana;
   font-weight: bold;
   font-size: 20px;
@@ -80,7 +80,7 @@ svg {
   border: 3px solid gray;
 }
 .selected {
-  background-color: lightblue;
+  background-color: lightgrey;
 }
 .messages {
   background-color: lightgrey;
@@ -105,10 +105,18 @@ svg {
 }
 .button {
   display: inline-block;
-  border: 2px solid black;
+  border: 2px solid grey;
   padding: 5px;
   border-radius: 6px;
 }
 .button.pressed {
-  background-color: lightblue;
+  background-color: lightgrey;
+}
+.dark {
+  background-color: black;
+  color: grey;
+}
+.light {
+  background-color: lightgrey;
+  border: 2px solid lightgrey;
 }

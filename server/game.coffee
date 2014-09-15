@@ -20,14 +20,14 @@
     console.log(maxcards - in_play)
     for i in [0..(maxcards - in_play - 1)] by 1
       if (cards_left = Gamecards.find({status: 'unused'}).count()) == 0
-        Gamecards.update({status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
+        Gamecards.update({game_id: game, status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
         cards_left = Gamecards.find({status: 'unused'}).count()
       console.log('cards left ' + cards_left)
       R = Math.floor(Math.random() * cards_left)
       console.log(cards_left)
       console.log(R)
       gc = Gamecards.find({status: 'unused'},{limit: 1, skip: R}).fetch()
-      Gamecards.update({game_id: 0, _id: gc[0]._id, status:'unused'}, {$set: {status: 'playing'}},
+      Gamecards.update({game_id: game, _id: gc[0]._id, status:'unused'}, {$set: {status: 'playing'}},
         callback = (error,result) ->
           console.log("records affected: " + result)
           if result > 0
@@ -67,11 +67,11 @@
   if i == 0
     if c.length == 12
       refill_game(15)
-      Statistics.update({game: 0}, {$inc: {no_sets_in_twelve: 1}})
+      Statistics.update({game: game}, {$inc: {no_sets_in_twelve: 1}})
       message = "Adding 3 cards to 12"
     else if c.length == 15
       refill_game(18)
-      Statistics.update({game: 0}, {$inc: {no_sets_in_fifteen: 1}})
+      Statistics.update({game: game}, {$inc: {no_sets_in_fifteen: 1}})
       message = "Adding 3 cards to 15"
     else
       refill_game(12)

@@ -8,6 +8,7 @@ Session.setDefault("interface-type", "card")
 Session.setDefault("selection-type", "normal")
 Session.setDefault("isometric", "false")
 Session.setDefault("selection-limit", 3)
+Session.setDefault("dark","false")
 
 @shapes = ['diamond', 'oval', 'squiggle']
 @colors = ['green', 'purple', 'red']
@@ -52,6 +53,18 @@ Template.globalGame.events
     else
       $('.button.isometric').removeClass('pressed')
       Session.set("isometric","false")
+  'click .vision': ->
+      if Session.get("dark") == "false"
+        $('body').addClass('dark')
+        $('.button').not('.vision').addClass('dark')
+        $('.vision').removeClass('dark').addClass('light')
+        Session.set("dark","true")
+      else
+        $('body').removeClass('dark')
+        $('.button').removeClass('dark')
+        $('.vision').removeClass('light').addClass('dark')
+        Session.set("dark","false")
+
 
 
 Template.globalGame.events
