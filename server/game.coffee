@@ -75,8 +75,8 @@
       Statistics.update({game: game_id}, {$inc: {no_sets_in_fifteen: 1}})
       message = "Adding 3 cards to 15"
     else
-      refill_game(12,game_id)
-      console.log("too few cards " + c.length)
+      refill_game(c.length+1,game_id)
+      console.log("adding just one card" + c.length)
   else
     message = "There exist " + i + " sets."
   console.log(message)

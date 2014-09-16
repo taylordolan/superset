@@ -36,7 +36,7 @@ svg {
 .cardrow {
   width: 100%;
   margin: 0 0 0 0;
-  padding: 2px 10px 2px 2px;
+  padding: 2px 2px 2px 2px;
   white-space: nowrap;
 }
 .textcard {
@@ -62,13 +62,13 @@ svg {
   text-align: center;
   border-radius: 6px;
 }
-.card2 {
-  box-sizing: border-box;
+.intro-card {
   display: inline-block;
-  border-radius: 6px;
-  margin: 10px 10px 0 0px;
-  padding: 0 0 0 0;
+  position: relative;
+  width: 24%;
+  overflow: hidden;
   text-align: center;
+  border-radius: 6px;
 }
 .green-card {
   border: 3px solid gray;
@@ -80,6 +80,9 @@ svg {
   border: 3px solid gray;
 }
 .selected {
+  background-color: lightgrey;
+}
+.intro-selected {
   background-color: lightgrey;
 }
 .messages {
@@ -119,4 +122,45 @@ svg {
 .light {
   background-color: lightgrey;
   border: 2px solid lightgrey;
+}
+.modal {
+    width: 90%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 2%;
+    margin-left: 5%;
+    padding: 0px;
+    display:none;
+}
+.modal-header .close {
+  margin-top: 0;
+}
+.modal.fade {
+  top: 5%;
+}
+.modal.fade.in {
+  top: 0%;
+}
+.modal-title {
+  color: #444444;
+  font-family: verdana;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+}
+.close {
+  margin-top:0;
+  font-size: 16px;
+  line-height: 16px;
+  vertical-align: middle;
+}
+.modal-body {
+  color: #444444;
+  font-family: verdana;
+  max-height: 100%;
+}
+.modal-body li {
+  margin-left: 28px;
 }
