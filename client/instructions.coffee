@@ -1,10 +1,25 @@
+Array.prototype.equals = (array) ->
+  if !array
+    return false;
+
+  if (this.length != array.length)
+    return false;
+
+  i = 0
+  for thing in this
+    if (this[i] instanceof Array && array[i] instanceof Array)
+      if (!this[i].equals(array[i]))
+        return false
+    else if (this[i] != array[i])
+      return false
+    i++
+  return true
+
 introset = []
 
 Template.instructions.events
   'click .intro-card': (e, template) ->
     e.preventDefault();
-    console.log('clicked intro card')
-    console.log(e.target.id)
     if ($(e.target).hasClass('intro-selected'))
       $(e.target).removeClass('intro-selected')
       i = 0
@@ -20,60 +35,33 @@ Template.instructions.events
         introset.push(e.target.id)
 
     console.log('intro-selected cards ' + $('.intro-card.intro-selected').length)
-    for card in introset
-      console.log(card)
     if Session.get("selection-type") == "normal"
       if ($('.intro-card.intro-selected').length == 3)
-        N = 0
-        C = 0
-        SD = 0
-        SP = 0
-        (N = N + card.number; C = C + card.color; SD = SD + card.shade; SP = SP + card.shape) for card in introset
         delay = 3500
         delay_increment = 750
-        if (N % 3 == 0)
-          v_number = true
-        else
-          v_number = false
-          $('.messages').append('<div class="n">Number does not qualify.</div>')
-          Meteor.setTimeout((-> $('.n').remove()), delay)
-          delay += delay_increment
-        if (C % 3 == 0)
-          v_color = true
-        else
-          v_color = false
-          $('.messages').append('<div class="c">Color does not qualify.</div>')
-          Meteor.setTimeout((-> $('.c').remove()), delay)
-          delay += delay_increment
-        if (SD % 3 == 0)
-          v_shade = true
-        else
-          v_shade = false
-          $('.messages').append('<div class="sd">Shade does not qualify.</div>')
-          Meteor.setTimeout((-> $('.sd').remove()), delay)
-          delay += delay_increment
-        if (SP % 3 == 0)
-          v_shape = true
-        else
-          v_shape = false
-          $('.messages').append('<div class="sp">Shape does not qualify.</div>')
-          Meteor.setTimeout((-> $('.sp').remove()), delay)
-          delay += delay_increment
-        if (v_number && v_color && v_shade && v_shape)
-          $('.messages').append('<div class="v">Valid Set!</div>')
+        set1 = ['card01','card02','card03']
+        set2 = ['card01','card06','card09']
+        set3 = ['card02','card06','card08']
+        set4 = ['card03','card06','card10']
+        set5 = ['card08','card09','card10']
+        introset.sort();
+        if introset.equals(set1)
+          $('.intromessages').append('<div class="v">You found the set mentioned in the instructions!</div>')
           Meteor.setTimeout((-> $('.v').remove()), delay + 200)
-          setargs = []
-          setargs.push card._id for card in introset
-          console.log(setargs)
-          Meteor.setTimeout((-> $('.intro-selected').removeClass('intro-selected')))
-          set = []
+        else if introset.equals(set2)
+          $('.intromessages').append('<div class="v">You found a set where all qualities are different!</div>')
+          Meteor.setTimeout((-> $('.v').remove()), delay + 200)
+        else if introset.equals(set3)
+          $('.intromessages').append('<div class="v">You found a set where all qualities are different!</div>')
+          Meteor.setTimeout((-> $('.v').remove()), delay + 200)
+        else if introset.equals(set4)
+          $('.intromessages').append('<div class="v">You found an all red set!</div>')
+          Meteor.setTimeout((-> $('.v').remove()), delay + 200)
+        else if introset.equals(set5)
+          $('.intromessages').append('<div class="v">You found an set where only color differs!</div>')
+          Meteor.setTimeout((-> $('.v').remove()), delay + 200)
         else
-          set = []
-          Meteor.setTimeout((-> $('.intro-selected').removeClass('intro-selected')), 250)
-    else if Session.get("selection-type") == "superunknown"
-      if ($('.intro-card.intro-selected').length == 6)
-        setargs = []
-        setargs.push card._id for card in set
-        console.log(setargs)
-        Meteor.setTimeout((-> $('.intro-selected').removeClass('intro-selected')))
-        set = []
+          $('.intromessages').append('<div class="v">Not a set!</div>')
+          Meteor.setTimeout((-> $('.v').remove()), delay + 200)
+        introset = []
+        Meteor.setTimeout((-> $('.intro-selected').removeClass('intro-selected')), 250)

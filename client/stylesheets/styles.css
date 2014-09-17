@@ -70,6 +70,10 @@ svg {
   text-align: center;
   border-radius: 6px;
 }
+.svg-card {
+  width:25%;
+  height:25%;
+}
 .green-card {
   border: 3px solid gray;
 }
@@ -85,11 +89,11 @@ svg {
 .intro-selected {
   background-color: lightgrey;
 }
-.messages {
+.messages, .intromessages {
   background-color: lightgrey;
   color: darkred;
   border-radius: 6px;
-  width:40%;
+  width:100%;
   text-align: center;
   margin: 40px auto;
 }
@@ -125,6 +129,7 @@ svg {
 }
 .modal {
     width: 90%;
+    height: 95%;
     position: absolute;
     top: 0;
     left: 0;
@@ -159,7 +164,7 @@ svg {
 .modal-body {
   color: #444444;
   font-family: verdana;
-  max-height: 100%;
+  max-height: 95%;
 }
 .modal-body li {
   margin-left: 28px;

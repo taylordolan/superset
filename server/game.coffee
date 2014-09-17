@@ -78,7 +78,14 @@
       refill_game(c.length+1,game_id)
       console.log("adding just one card" + c.length)
   else
-    message = "There exist " + i + " sets."
+    p = ''
+    n = ''
+    if i > 1
+      p = 's'
+    else
+      n = 's'
+    message = "There exists " + i + " set" + p + "."
+    message = i + " set" + p + " exist" + n + "."
   console.log(message)
   return message
 

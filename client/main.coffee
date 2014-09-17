@@ -170,11 +170,11 @@ doSelect = (item) ->
       if Session.get("isometric") == "true"
         iso = 1
       Meteor.call 'SUset', game, setargs, iso, (error, result) ->
-      if error
-        console.log(error)
-      else
-        $('.messages').append('<div class="chk">'+result+'</div>')
-        Meteor.setTimeout((-> $('.chk').remove()), 1750)
+        if error
+          console.log(error)
+        else
+          $('.messages').append('<div class="chk">'+result+'</div>')
+          Meteor.setTimeout((-> $('.chk').remove()), 1750)
       Meteor.setTimeout((-> $('.selected').removeClass('selected')))
       set = []
 

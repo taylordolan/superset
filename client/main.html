@@ -71,7 +71,7 @@
 <template name="card">
   <div class="card {{colors color}}-card" data-number="{{number}}" data-color="{{color}}" data-shade="{{shade}}" data-shape="{{shape}}" id={{_id}}>
   {{#each shapearray number}}
-  <svg width="25%" viewBox="0 0 100 200" preserveAspectRatio="xMinYMin meet" data-number="{{number}}" z-index=-40>
+  <svg class="svg-card" viewBox="0 0 100 200" preserveAspectRatio="xMinYMin meet" data-number="{{number}}" z-index=-40>
     <use xlink:href="#{{shapes ../shape}}" style="stroke: {{colors ../color}}; {{shader ../shade ../color}}" />
   </svg>
   {{/each}}
