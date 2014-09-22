@@ -9,17 +9,27 @@
   # c = Cards.find({number: number, color: color, shade: shade, shape: shape, type: 'standard'})
   return c
 
+@get_distinct_order = (game_id) ->
+  r = Gamecards.find({game_id: game_id, status: 'playing'}, {sort: {order: 1}}).fetch()
+  ordering = []
+  i = 0
+  # for card in r
+  #   if card.order =
+
 @refill_game = (maxcards,game_id) ->
   if maxcards
     maxcards
   else
     maxcards = 12
   console.log('refill')
-  in_play = Gamecards.find({game_id: game_id, status: 'playing'}).count()
-  #console.log("cards in play: " + in_play)
-  if in_play < maxcards
-    console.log(maxcards - in_play)
-    for i in [0..(maxcards - in_play - 1)] by 1
+  in_play = Gamecards.find({game_id: game_id, status: 'playing'}, {sort: {order: 1}}).fetch()
+  console.log("cards in play: " + in_play.length)
+  if in_play.length < maxcards
+    console.log(maxcards - in_play.length)
+
+    for i in [0..(maxcards - in_play.length - 1)] by 1
+      #console.log("index test: " + i)
+      #console.log(in_play[i])
       if (cards_left = Gamecards.find({game_id: game_id, status: 'unused'}).count()) == 0
         Gamecards.update({game_id: game_id, status: 'matched'}, {$set: {status: 'unused'}}, {multi: true})
         cards_left = Gamecards.find({game_id: game_id,status: 'unused'}).count()
@@ -88,5 +98,3 @@
     message = i + " set" + p + " exist" + n + "."
   console.log(message)
   return message
-
-  @

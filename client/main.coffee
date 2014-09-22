@@ -1,7 +1,4 @@
-Meteor.subscribe('cards');
-Meteor.subscribe('gamecards');
-Meteor.subscribe('games');
-Meteor.subscribe('statistics');
+
 
 Session.setDefault("counter", 0)
 Session.setDefault("interface-type", "card")
@@ -9,6 +6,44 @@ Session.setDefault("selection-type", "normal")
 Session.setDefault("isometric", "false")
 Session.setDefault("selection-limit", 3)
 Session.setDefault("dark","false")
+sec = -1
+Session.set('dt_sets_normal',0)
+Session.set('dt_sets_ghost',0)
+Session.set('dt_sets_isoghost',0)
+
+@cdelay = 450
+@game = 0
+
+pad = (val) ->
+  return if val > 9 then val else "0" + val
+
+$( document).ready () ->
+  if localStorage.getItem("sets_normal")
+    $('.sets_normal').html(localStorage.getItem("sets_normal"))
+  else
+    localStorage.setItem("sets_normal",0)
+
+  if localStorage.getItem("sets_ghost")
+    $('.sets_ghost').html(localStorage.getItem("sets_ghost"))
+  else
+    localStorage.setItem("sets_ghost",0)
+
+  if localStorage.getItem("sets_isoghost")
+    $('.sets_isoghost').html(localStorage.getItem("sets_isoghost"))
+  else
+    localStorage.setItem("sets_isoghost",0)
+
+  $('.sets_normal_elapsed').html(localstorage.get("dt_sets_normal"))
+  $('.sets_ghost_elapsed').html(localstorage.get("dt_sets_ghost"))
+  $('.sets_isoghost_elapsed').html(localstorage.get("dt_sets_isoghost"))
+
+  setInterval ->
+    $("#te_s").html(pad(++sec % 60))
+    $("#te_m").html(pad(parseInt(sec / 60, 10) % 60))
+    $("#te_h").html(pad(parseInt(sec / 3600, 10)))
+  ,1000
+
+
 
 @shapes = ['diamond', 'oval', 'squiggle']
 @colors = ['green', 'purple', 'red']
@@ -33,9 +68,23 @@ Session.setDefault("dark","false")
 @key[67] = 10
 @key[86] = 11
 
-@game = 0
-
 set = []
+
+Meteor.startup ->
+  Meteor.subscribe('cards')
+  Meteor.subscribe('gamecards')
+  Meteor.subscribe('games')
+  Meteor.subscribe('statistics')
+  s = Statistics.findOne({game: 0})
+  console.log(s)
+  localStorage.setItem("b_sets_normal", s.sets_found)
+  localStorage.setItem("b_sets_ghost", s.superunknown_found)
+  localStorage.setItem("b_sets_isoghost", s.isosuperunknown_found)
+  #localStorage.setItem('dt_sets_normal',s.sets_found)
+  #localStorage.setItem('dt_sets_ghost',s.superunknown_found)
+  #localStorage.setItem('dt_sets_isoghost',s.isosuperunknown_found)
+
+
 
 Template.globalGame.events
   'click .check': () ->
@@ -93,9 +142,6 @@ doSelect = (item) ->
     i = 0
     match = 0
     for card in set
-      console.log('2 ids')
-      console.log(card.id)
-      console.log(item.id)
       if (card.id == item.id)
         match = i
       i++
@@ -106,13 +152,7 @@ doSelect = (item) ->
       set.push(item)
 
   console.log('selected cards ' + $('.card.selected').length)
-  for card in set
-    console.log('attr')
-    console.log(card)
 
-  for card in set
-    console.log('id')
-    console.log(card.prop("id"))
   if Session.get("selection-type") == "normal"
     if ($('.card.selected').length == 3)
       N = 0
@@ -151,6 +191,13 @@ doSelect = (item) ->
         Meteor.setTimeout((-> $('.sp').remove()), delay)
         delay += delay_increment
       if (v_number && v_color && v_shade && v_shape)
+        localStorage.setItem("sets_normal", parseInt(localStorage.getItem("sets_normal")) + 1);
+        $('.sets_normal').html(localStorage.getItem("sets_normal"))
+        $('.sets_normal').addClass('scored')
+        Meteor.setTimeout((-> $('.sets_normal').removeClass('scored')), cdelay)
+        Session.set("dt_sets_normal",0)
+        $('.sets_normal_elapsed').html(Session.get("dt_sets_normal"))
+        sec = -1
         $('.messages').append('<div class="v">Valid Set!</div>')
         Meteor.setTimeout((-> $('.v').remove()), delay + 200)
         setargs = []
@@ -169,11 +216,37 @@ doSelect = (item) ->
       console.log(setargs)
       if Session.get("isometric") == "true"
         iso = 1
+      else
+        iso = 0
       Meteor.call 'SUset', game, setargs, iso, (error, result) ->
         if error
           console.log(error)
         else
-          $('.messages').append('<div class="chk">'+result+'</div>')
+          if result == 1
+            if iso == 0
+              message = 'Valid Super Unknown Set!'
+              localStorage.setItem("sets_ghost", parseInt(localStorage.getItem("sets_ghost")) + 1)
+              sec = -1
+              $('.sets_ghost').html(localStorage.getItem("sets_ghost"))
+              $('.sets_ghost').addClass('scored')
+              Meteor.setTimeout((-> $('.sets_ghost').removeClass('scored')), cdelay)
+              Session.set("dt_sets_ghost",0)
+              $('.sets_ghost_elapsed').html(Session.get("dt_sets_ghost"))
+            else
+              message = 'Valid Isometric Super Unknown Set!'
+              localStorage.setItem("sets_isoghost", parseInt(localStorage.getItem("sets_isoghost")) + 1)
+              sec = -1
+              $('.sets_isoghost').html(localStorage.getItem("sets_isoghost"))
+              $('.sets_isoghost').addClass('scored')
+              Meteor.setTimeout((-> $('.sets_isoghost').removeClass('scored')), cdelay)
+              Session.set("dt_sets_isoghost",0)
+              $('.sets_isoghost_elapsed').html(Session.get("dt_sets_isoghost"))
+          else
+            if iso == 0
+              message = 'Not a valid Super Unknown Set'
+            else
+              message = 'Not a valid Isometric Super Unknown Set (selection order matters)'
+          $('.messages').append('<div class="chk">'+message+'</div>')
           Meteor.setTimeout((-> $('.chk').remove()), 1750)
       Meteor.setTimeout((-> $('.selected').removeClass('selected')))
       set = []
@@ -190,8 +263,28 @@ window.onkeyup = (e) ->
     doSelect($('.card').eq(key[e.which]))
 
 Template.nav.helpers
-  statistics: () ->
-    return Statistics.findOne()
+  statistics: ->
+    s = Statistics.findOne({game: game})
+    return s
+
+query = Statistics.find({game: game})
+handle = query.observeChanges(
+  changed: (id, record)->
+    if record.sets_found
+      $('.sets_normal_elapsed').html(record.sets_found - localStorage.getItem("b_sets_normal"))
+      $('.sets_normal_elapsed').addClass('scored')
+      Meteor.setTimeout((-> $('.sets_normal_elapsed').removeClass('scored')), cdelay)
+
+    if record.superunknown_found
+      $('.sets_ghost_elapsed').html(record.superunknown_found - localStorage.getItem("b_sets_ghost"))
+      $('.sets_isoghost_elapsed').addClass('scored')
+      Meteor.setTimeout((-> $('.sets_ghost_elapsed').removeClass('scored')), cdelay)
+
+    if record.isosuperunknown_found
+      $('.sets_isoghost_elapsed').html(record.superunknown_found - localStorage.getItem("b_sets_ghost"))
+      $('.sets_isoghost_elapsed').addClass('scored')
+      Meteor.setTimeout((-> $('.sets_isoghost_elapsed').removeClass('scored')), cdelay)
+)
 
 Template.globalGame.helpers
   gamecards: () ->

@@ -28,13 +28,33 @@ svg {
   vertical-align: middle;
   float: left;
 }
-.navinfo {
+.local-info {
   padding: 2px 4px 2px 0;
   font-weight: normal;
   font-size: 14px;
   display: inline-block;
   float: right;
   vertical-align: middle;
+}
+.global-info {
+  padding: 2px 4px 2px 0;
+  font-weight: normal;
+  font-size: 14px;
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
+}
+.difference-info {
+  padding: 2px 4px 2px 0;
+  font-weight: normal;
+  font-size: 14px;
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
+}
+.scored {
+  color: green;
+  font-weight: bold;
 }
 .cardrow {
   width: 100%;

@@ -1,6 +1,8 @@
 <template name="nav">
 <div class='topbar'>
  <div class='logo'>SuperSet</div>
- <div class='navinfo'>Sets Found: {{statistics.sets_found}} | {{statistics.superunknown_found}} | {{statistics.isosuperunknown_found}}</div>
+ <div class='global-info'>[Global: {{statistics.sets_found}} | {{statistics.superunknown_found}} | {{statistics.isosuperunknown_found}}</div>
+ <div class='difference-info'>| <span title="Sets Elapsed">SE</span> : <span class='sets_normal_elapsed'></span>/<span class='sets_ghost_elapsed'></span>/<span class='sets_isoghost_elapsed'></span> | <span title="Time Elapsed"><span id="te_m"></span>:<span id="te_s"></span></span>]</div>
+ <div class='local-info'>[Local: <span class='sets_normal'></span> | <span class='sets_ghost'></span> | <span class='sets_isoghost'></span>]</div>
 </div>
 </template>

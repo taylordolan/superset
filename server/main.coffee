@@ -19,6 +19,7 @@ Array.prototype.equals = (array) ->
   return true
 
 Meteor.startup ->
+  _dummyCollection_ = new Meteor.Collection '__dummy__'
   refill_game(12,game)
   Meteor.methods
     dummy: ->
@@ -118,16 +119,14 @@ Meteor.startup ->
         refill_game(12,game_id)
         if iso == 0
           Statistics.update({game: game_id}, {$inc: {superunknown_found: 1}})
-          message = 'Valid Super Unknown Set!'
+          result = 1
         else
           Statistics.update({game: game}, {$inc: {isosuperunknown_found: 1}})
-          message = 'Valid Isometric Super Unknown Set!'
+          result = 1
       else
-        if iso == 0
-          message = 'Not a valid Super Unknown Set'
-        else
-          message = 'Not a valid Isometric Super Unknown Set (selection order matters)'
-      return message
+        result = 0
+        
+      return result
 
     check_sets: (game_id) ->
       unless game_id
