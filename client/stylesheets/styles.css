@@ -85,6 +85,11 @@ svg {
   text-align: center;
   border-radius: 6px;
 }
+@media (orientation: portrait) {
+  .card {
+    width: 33%;
+  }
+}
 .intro-card {
   display: inline-block;
   position: relative;

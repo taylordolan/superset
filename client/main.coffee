@@ -306,7 +306,11 @@ Template.globalGame.helpers
     #console.log(cardIds)
     all = Cards.find({_id: {$in: cardIds}}).fetch()
     chunks = []
-    size = 4
+    if (window.innerHeight > window.innerWidth)
+      size = 3
+    else
+      size = 4
+
     #console.log("all : " + all.length)
     while (all.length > size)
       chunks.push({ row: all.slice(0, size)})
