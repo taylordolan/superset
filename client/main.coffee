@@ -95,7 +95,7 @@ Template.globalGame.events
   'click .mode': ->
     if Session.get("selection-type") == "normal"
       $('.button.mode').addClass('pressed')
-      Session.set("selection-type","superunknown")
+      Session.set("selection-type","ghost")
       Session.set("selection-limit", 6)
     else
       $('.button.mode').removeClass('pressed')
@@ -108,7 +108,7 @@ Template.globalGame.events
       $('.button.isometric').addClass('pressed')
       $('.button.mode').addClass('pressed')
       Session.set("isometric","true")
-      Session.set("selection-type","superunknown")
+      Session.set("selection-type","ghost")
       Session.set("selection-limit", 6)
     else
       $('.button.isometric').removeClass('pressed')
@@ -201,7 +201,7 @@ doSelect = (item) ->
       else
         set = []
         Meteor.setTimeout((-> $('.selected').removeClass('selected')), 250)
-  else if Session.get("selection-type") == "superunknown"
+  else if Session.get("selection-type") == "ghost"
     if ($('.card.selected').length == 6)
       setargs = []
       setargs.push card.prop("id") for card in set
@@ -210,14 +210,14 @@ doSelect = (item) ->
         iso = 1
       else
         iso = 0
-      Meteor.call 'SUset', game, setargs, iso, (error, result) ->
+      Meteor.call 'setGhost', game, setargs, iso, (error, result) ->
         if error
           console.log(error)
         else
           if result == 1
             if iso == 0
               sec = -1
-              message = 'Valid Super Unknown Set!'
+              message = 'Valid Ghost Set!'
               localStorage.setItem("sets_ghost", parseInt(localStorage.getItem("sets_ghost")) + 1)
               $('.sets_ghost').html(localStorage.getItem("sets_ghost"))
               $('.sets_ghost').addClass('scored')
@@ -227,7 +227,7 @@ doSelect = (item) ->
               console.log('score ' + localStorage.getItem("dt_sets_ghost") + " " + localStorage.getItem("b_sets_ghost"))
             else
               sec = -1
-              message = 'Valid Isometric Super Unknown Set!'
+              message = 'Valid Isometric Ghost Set!'
               localStorage.setItem("sets_isoghost", parseInt(localStorage.getItem("sets_isoghost")) + 1)
               $('.sets_isoghost').html(localStorage.getItem("sets_isoghost"))
               $('.sets_isoghost').addClass('scored')
@@ -236,9 +236,9 @@ doSelect = (item) ->
               $('.sets_isoghost_elapsed').html("0")
           else
             if iso == 0
-              message = 'Not a valid Super Unknown Set'
+              message = 'Not a valid Ghost Set'
             else
-              message = 'Not a valid Isometric Super Unknown Set (selection order matters)'
+              message = 'Not a valid Isometric Ghost Set (selection order matters)'
           $('.messages').append('<div class="chk">'+message+'</div>')
           Meteor.setTimeout((-> $('.chk').remove()), 1750)
       Meteor.setTimeout((-> $('.selected').removeClass('selected')))
@@ -262,41 +262,41 @@ Template.nav.helpers
       console.log("run once")
       console.log(localStorage.getItem("b_sets_normal"))
       if !parseInt(localStorage.getItem("b_sets_normal"))
-        localStorage.setItem("b_sets_normal", s.sets_found)
+        localStorage.setItem("b_sets_normal", s.found_sets)
       if !parseInt(localStorage.getItem("b_sets_ghost"))
-        localStorage.setItem("b_sets_ghost", s.superunknown_found)
+        localStorage.setItem("b_sets_ghost", s.found_ghosts)
       if !parseInt(localStorage.getItem("b_sets_isoghost"))
-        localStorage.setItem("b_sets_isoghost", s.isosuperunknown_found)
-      localStorage.setItem('dt_sets_normal',s.sets_found)
-      localStorage.setItem('dt_sets_ghost',s.superunknown_found)
-      localStorage.setItem('dt_sets_isoghost',s.isosuperunknown_found)
+        localStorage.setItem("b_sets_isoghost", s.found_isoghosts)
+      localStorage.setItem('dt_sets_normal',s.found_sets)
+      localStorage.setItem('dt_sets_ghost',s.found_ghosts)
+      localStorage.setItem('dt_sets_isoghost',s.found_isoghosts)
       Session.set("score_init",1)
     return s
 
 query = Statistics.find({game: game})
 handle = query.observeChanges(
   changed: (id, record)->
-    if record.sets_found
-      if record.sets_found > localStorage.getItem("b_sets_normal")
+    if record.found_sets
+      if record.found_sets > localStorage.getItem("b_sets_normal")
         $('.sets_normal_elapsed').addClass('scored')
         Meteor.setTimeout((-> $('.sets_normal_elapsed').removeClass('scored')), cdelay)
-      $('.sets_normal_elapsed').html(record.sets_found - localStorage.getItem("b_sets_normal"))
-      console.log(record.sets_found + ' - ' + localStorage.getItem("b_sets_normal"))
-      localStorage.setItem("dt_sets_normal",record.sets_found)
+      $('.sets_normal_elapsed').html(record.found_sets - localStorage.getItem("b_sets_normal"))
+      console.log(record.found_sets + ' - ' + localStorage.getItem("b_sets_normal"))
+      localStorage.setItem("dt_sets_normal",record.found_sets)
 
-    if record.superunknown_found
-      if record.superunknown_found > localStorage.getItem("b_sets_ghost")
+    if record.found_ghosts
+      if record.found_ghosts > localStorage.getItem("b_sets_ghost")
         $('.sets_ghost_elapsed').addClass('scored')
         Meteor.setTimeout((-> $('.sets_ghost_elapsed').removeClass('scored')), cdelay)
-      $('.sets_ghost_elapsed').html(record.superunknown_found - localStorage.getItem("b_sets_ghost"))
-      localStorage.setItem("dt_sets_ghost",record.superunknown_found)
+      $('.sets_ghost_elapsed').html(record.found_ghosts - localStorage.getItem("b_sets_ghost"))
+      localStorage.setItem("dt_sets_ghost",record.found_ghosts)
 
-    if record.isosuperunknown_found
-      if record.isosuperunknown_found > localStorage.getItem("b_sets_isoghost")
+    if record.found_isoghosts
+      if record.found_isoghosts > localStorage.getItem("b_sets_isoghost")
         $('.sets_isoghost_elapsed').addClass('scored')
         Meteor.setTimeout((-> $('.sets_isoghost_elapsed').removeClass('scored')), cdelay)
-      $('.sets_isoghost_elapsed').html(record.isosuperunknown_found - localStorage.getItem("b_sets_isoghost"))
-      localStorage.setItem("b_sets_isoghost",record.isosuperunknown_found)
+      $('.sets_isoghost_elapsed').html(record.found_isoghosts - localStorage.getItem("b_sets_isoghost"))
+      localStorage.setItem("b_sets_isoghost",record.found_isoghosts)
 )
 
 Template.globalGame.helpers
