@@ -83,7 +83,7 @@ svg {
   width: 24%;
   overflow: hidden;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 2px;
 }
 @media (orientation: portrait) {
   .card {
